@@ -11,6 +11,12 @@ use App\Http\Requests\Admin\Cities\UpdateCityRequest;
 class CitiesController extends Controller
 {
     const AVAILABLE_STATUS =['متاح التوصيل'=>1,'غير متاح التوصيل'=>0];
+    public function __construct() {
+        $this->middleware('permission:Update Cities,admin')->only('edit','update');
+        $this->middleware('permission:Store Cities,admin')->only('create','store');
+        $this->middleware('permission:Index Cities,admin')->only('index');
+        $this->middleware('permission:Destroy Cities,admin')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *

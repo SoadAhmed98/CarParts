@@ -16,6 +16,12 @@ class BrandsController extends Controller
 {
     const AVAILABLE_STATUS =['مفعل'=>1,'غير مفعل'=>0];
     const AVAILABLE_EXTENSIONS = ['png','jpg','jpeg'];
+    public function __construct() {
+        $this->middleware('permission:Update Brands,admin')->only('edit','update');
+        $this->middleware('permission:Store Brands,admin')->only('create','store');
+        $this->middleware('permission:Index Brands,admin')->only('index');
+        $this->middleware('permission:Destroy Brands,admin')->only('destroy');
+    }
     public function index ()
     {
         $brands=Brand::all();

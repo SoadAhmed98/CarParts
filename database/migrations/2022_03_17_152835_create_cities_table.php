@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->json('name')->unique();
             $table->tinyInteger('status')->default(0)->comment('0=>not deliverd,1=>deliverd');
+            $table->tinyInteger('code')->unique();
             $table->timestamps();
         });
     }

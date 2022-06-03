@@ -23,10 +23,15 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {
-        $admins=Admin::all()->first();
-        if($admins){
-         config(['app.admins'=>false]);
-        }
+    { 
+        try{
+            $admins=Admin::all()->first();
+            if($admins){
+             config(['app.admins'=>false]);
+            }
+          }catch(\Exception $e){
+              
+          }
+       
     }
 }

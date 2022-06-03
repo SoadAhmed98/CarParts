@@ -77,7 +77,7 @@
                         <select name="status" class="custom-select" id="status">
     
                             @foreach ($statuses as $status => $value)
-                                <option @selected($model->status == $value) value="{{ $value }}">{{ $status }}</option>
+                                <option @selected($region->status == $value) value="{{ $value }}">{{ $status }}</option>
                             @endforeach
                         </select>
                         @error('status')

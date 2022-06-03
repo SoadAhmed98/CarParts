@@ -14,6 +14,12 @@ class ModelsController extends Controller
 {
     const AVAILABLE_STATUS =['مفعل'=>1,'غير مفعل'=>0];
     const AVAILABLE_EXTENSIONS = ['png','jpg','jpeg'];
+    public function __construct() {
+        $this->middleware('permission:Update Models,admin')->only('edit','update');
+        $this->middleware('permission:Store Models,admin')->only('create','store');
+        $this->middleware('permission:Index Models,admin')->only('index');
+        $this->middleware('permission:Destroy Models,admin')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *

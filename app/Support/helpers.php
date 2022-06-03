@@ -1,9 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
  function RedirectAccordingToRequest($request,$responseStatus)
-{
+   {
     if($responseStatus == 'success'){
         $value="تمت العملية بنجاح";
     }else{
@@ -17,6 +18,8 @@ use Illuminate\Support\Str;
      }else{
       return redirect()->back()->with($responseStatus,$value);  
      }
-
-    }
-?>
+     }
+     function can(string $permissions , ?string $guard=Null) :bool
+     {
+        return Auth()->guard($guard)->user()->can($permissions);
+     }

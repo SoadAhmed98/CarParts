@@ -46,6 +46,18 @@ class permissionGenerator {
           }
         return $this;
     }
+    public function exceptMethods(array $givenMethods)
+    {
+       
+        foreach($this->permissions as $fullnamespace => $methods){
+          foreach($methods as $index=>$method){
+              if(in_array($method,$givenMethods)){
+                  unset($this->permissions[$fullnamespace][$index]);
+              }
+          }
+        }
+        return $this;
+    }
     public function getFullNamespace()
     {
         return $this->permissions;

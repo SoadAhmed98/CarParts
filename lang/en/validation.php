@@ -161,7 +161,9 @@ return [
     'attributes' => [
         'name.ar'=>'Name in Arabic',
         'name.en'=>'Name in English',
-        'permission_id'=>'permission'
+        'permission_id'=>'permission',
+        'N_id'=>'National Id',
+        'role_id'=>'role'
     ],
 
 ];

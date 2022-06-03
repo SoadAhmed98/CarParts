@@ -2,22 +2,25 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword as CanResetPasswordTrait;
-use Spatie\Permission\Traits\HasRoles;
 
-class Admin extends Authenticatable implements CanResetPassword, MustVerifyEmail
+class Admin extends Authenticatable implements CanResetPassword, MustVerifyEmail,HasMedia
 {
     use HasApiTokens,
         HasFactory,
         Notifiable,
         CanResetPasswordTrait,
+        InteractsWithMedia,
         HasRoles;
     /**
      * The attributes that are mass assignable.
@@ -28,6 +31,7 @@ class Admin extends Authenticatable implements CanResetPassword, MustVerifyEmail
         'name',
         'email',
         'password',
+        'email_verified_at'
         
     ];
 

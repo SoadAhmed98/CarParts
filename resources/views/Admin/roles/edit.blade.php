@@ -48,7 +48,7 @@
                 </div>
             </div>
             <div>
-                @include('includes.create_submit_buttons')
+                <button type="submit" name="edit" class="btn btn-primary mt-2">تعديل</button>
             </div>
         </form>
 

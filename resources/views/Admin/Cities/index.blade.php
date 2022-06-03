@@ -8,7 +8,9 @@
      <h1 class="h1 text-center text-dark">@yield('title') </h1>
  </div>
  <div class="col-12">
-     <a href="{{route('cities.create')}}" class="btn btn-primary rounded btn-sm">إنشاء  مدينة</a>
+   @if (can('Store Cities','admin'))
+   <a href="{{route('cities.create')}}" class="btn btn-primary rounded btn-sm">إنشاء  مدينة</a> 
+   @endif
  </div>
  <div class="col-12">
     <div class="table-responsive mt-15">
@@ -35,12 +37,16 @@
                     <td>{{$city->created_at}}</td>
                     <td>{{$city->updated_at}}</td>
                     <td>
+                      @if (can('Update Cities','admin'))
                         <a href="{{route('cities.edit',['city'=> $city->id])}}" class="btn btn-outline-primary btn-sm">تعديل</a>
+                      @endif  
+                      @if (can('Destroy Cities','admin'))
                         <form method="post" action="{{route('cities.destroy',['city'=>$city->id])}}" class="d-inline-block">
                             @csrf
                             @method('delete')
                             <button class="btn btn-outline-danger btn-sm">حذف</button>
                         </form>
+                      @endif  
                     </td>
                 </tr>
               @empty

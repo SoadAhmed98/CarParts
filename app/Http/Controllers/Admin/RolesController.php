@@ -12,6 +12,15 @@ use App\Http\Requests\Admin\Roles\UpdateRoleRequest;
 
 class RolesController extends Controller
 {
+    public function __construct()
+     {
+        $this->middleware('superadmin.prevent.update')->only('edit','update','delete');
+        $this->middleware('permission:Update Roles,admin')->only('edit','update');
+        $this->middleware('permission:Store Roles,admin')->only('create','store');
+        $this->middleware('permission:Index Roles,admin')->only('index');
+        $this->middleware('permission:Destroy Roles,admin')->only('destroy');
+     }    
+    
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +28,7 @@ class RolesController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
+        $roles = Role::whereNot('id',1)->get();
         return view('Admin.roles.index',compact('roles'));
     }
 
@@ -46,7 +55,9 @@ class RolesController extends Controller
         DB::beginTransaction();
         try{
             $role=Role::create(['name'=>"$request->name",'guard_name'=>"admin"]);
-            $role->syncPermissions($request->permission_id);
+            if($request->has('permission_id')){
+                $role->syncPermissions($request->permission_id);
+            }
             DB::commit();
             return $this->RedirectAccordingToRequest($request,'success');
         }catch(\Exception $e){
@@ -56,16 +67,6 @@ class RolesController extends Controller
         
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -92,7 +93,12 @@ class RolesController extends Controller
         DB::beginTransaction();
         try{
             $role->update(['name'=>$request->name]);
-            $role->syncPermissions($request->permission_id);
+            if($request->has('permission_id')){
+               $permissions=$request->permission_id;
+            }else{
+                $permissions=[];
+            }
+            $role->syncPermissions($permissions);
             DB::commit();
             return redirect()->route('roles.index')->with('success','تمت العملية بنجاح');
         }catch(\Exception $e){

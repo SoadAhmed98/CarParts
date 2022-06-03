@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name',32);
+            $table->json('name');
+            $table->string('slug'); // Field name same as your `saveSlugsTo`
             $table->tinyInteger('status')->default(1)->comment('0=>not active ,1=> active (default)');
+            $table->nestedSet();
             $table->timestamps();
         });
     }
@@ -29,5 +31,6 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('categories');
+       
     }
 };
